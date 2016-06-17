@@ -26,7 +26,7 @@ public class func
 		ArrayList<Double> coeff = new ArrayList<Double>();
 		do {
 			theta.add(0.0);
-			coeff = gradDescent(theta, X, Y, 0.000001, 0.001);
+			coeff = gradDescent(theta, X, Y, 0.01, 0.000001);
 		} while(coeff.get(0) == Double.MAX_VALUE);
 
 		System.out.println(coeff);
@@ -51,6 +51,14 @@ public class func
 
 		while(J > err)
 		{
+			if(Math.abs(cost_hist.get(cost_hist.size()-1)-cost_hist.get(cost_hist.size()-2)) < err/1000.0)
+			{
+				System.out.println(ret + " with Cost: " + J);
+				ret.set(0, Double.MAX_VALUE);
+
+				break;
+			}
+
 			ArrayList<Double> temp = new ArrayList<Double>();
 			for(int j = 0; j < n; j++)
 			{
@@ -69,12 +77,7 @@ public class func
 
 			J = cost(ret, X, Y);
 			cost_hist.add(J);
-
-			if(cost_hist.get(cost_hist.size()-1)-cost_hist.get(cost_hist.size()-2) > err)
-			{
-				ret.set(0, Double.MAX_VALUE);
-				break;
-			}
+			//System.out.println(J);
 		}
 
 		return ret;
