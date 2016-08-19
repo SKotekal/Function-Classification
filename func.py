@@ -108,6 +108,11 @@ if __name__ == '__main__':
     plt.plot(X, [polyEval(coeff, x) for x in X])
     plt.show()
 
+    with open('coeff-' + f, 'wb') as output:
+        writer = csv.writer(output, delimiter=',')
+        writer.writerow(coeff)
+        writer.writerow([cost(coeff, X, Y)])
+
     print('Coefficients: ' + str(coeff))
     print('Cost: ' + str(cost(coeff, X, Y)))
     print('\n')
